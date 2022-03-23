@@ -11,12 +11,12 @@ test('Se o primeiro link deve possuir o texto Home', () => {
 
 test('Se o segundo link deve possuir o texto About', () => {
   renderWithRouter(<App />);
-  const routeHome = screen.getByText(/About/i);
-  expect(routeHome).toBeInTheDocument();
+  const routeAbout = screen.getByText(/About/i);
+  expect(routeAbout).toBeInTheDocument();
 });
 
 test('Se terceiro link deve possuir o texto Favorite Pokémons', () => {
   renderWithRouter(<App />);
-  const routeHome = screen.getByText(/Favorite Pokémons/i);
-  expect(routeHome).toBeInTheDocument();
+  const routeFavorite = screen.getByText(/Favorite Pokémons/i);
+  expect(routeFavorite).toBeInTheDocument();
 });
