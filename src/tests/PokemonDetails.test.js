@@ -1,12 +1,11 @@
 import { screen } from '@testing-library/react';
-// import userEvent from '@testing-library/user-event';
 import React from 'react';
 import App from '../App';
-// import { Pokemon } from '../components';
 import pokemons from '../data';
 import renderWithRouter from '../renderWithRouter';
 
 const pikachu = pokemons[0];
+const charmander = pokemons[1];
 
 test('se as informações detalhadas do Pokémon selecionado são mostradas na tela', () => {
   const { history } = renderWithRouter(<App />);
@@ -24,12 +23,18 @@ test('se as informações detalhadas do Pokémon selecionado são mostradas na t
 
 test('se existe uma seção com os mapas contendo as localizações do pokémon.', () => {
   const { history } = renderWithRouter(<App />);
-  history.push('/pokemons/25');
+  history.push('/pokemons/4');
 
   const headingEl = screen.getByRole('heading',
-    { name: `Game Locations of ${pikachu.name}` },
+    { name: `Game Locations of ${charmander.name}` },
     { level: 2 });
   expect(headingEl).toBeInTheDocument();
+  charmander.foundAt.forEach(({ location, map }, index) => {
+    const mapLocation = screen.queryByText(location);
+    expect(mapLocation).toBeInTheDocument();
+    const img = screen.getAllByAltText(`${charmander.name} location`)[index];
+    expect(img.src).toBe(map);
+  });
 });
 
 test('se o usuário pode favoritar um pokémon através da página de detalhes', () => {
