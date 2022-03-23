@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 // import userEvent from '@testing-library/user-event';
 import React from 'react';
 import App from '../App';
-import { Pokemon } from '../components';
+// import { Pokemon } from '../components';
 import pokemons from '../data';
 import renderWithRouter from '../renderWithRouter';
 
@@ -22,17 +22,20 @@ test('se as informações detalhadas do Pokémon selecionado são mostradas na t
   expect(pTag).toBeInTheDocument();
 });
 
-// test('se existe uma seção com os mapas contendo as localizações do pokémon.', () => {
-//   renderWithRouter(<Pokemon pokemon={ pikachu } />);
+test('se existe uma seção com os mapas contendo as localizações do pokémon.', () => {
+  const { history } = renderWithRouter(<App />);
+  history.push('/pokemons/25');
 
-//   const headingEl = screen.getByRole('heading',
-//     { name: `Game Locations of ${pikachu.name}` },
-//     { level: 2 });
-//   expect(headingEl).toBeDefined();
-// });
+  const headingEl = screen.getByRole('heading',
+    { name: `Game Locations of ${pikachu.name}` },
+    { level: 2 });
+  expect(headingEl).toBeInTheDocument();
+});
 
-// test('se o usuário pode favoritar um pokémon através da página de detalhes', () => {
-//   renderWithRouter(<App />);
-//   const favPokemon = screen.getByText(/Pokémon favoritado?/i);
-//   expect(favPokemon).toBeInTheDocument();
-// });
+test('se o usuário pode favoritar um pokémon através da página de detalhes', () => {
+  const { history } = renderWithRouter(<App />);
+  history.push('/pokemons/4');
+
+  const favPokemon = screen.getByLabelText(/Pokémon favoritado?/i);
+  expect(favPokemon).toBeInTheDocument();
+});
